@@ -63,7 +63,8 @@ CREATE  INDEX IF NOT EXISTS IX_Document_type_id  ON Document(type_id );
 ALTER TABLE Document ADD FOREIGN KEY (type_id) REFERENCES Type_document(id);
 
 CREATE TABLE IF NOT EXISTS  Citizenship(
-    id      INTEGER NOT NULL        COMMENT 'Код Гражданства ' PRIMARY KEY,
+    id      INTEGER NOT NULL        COMMENT 'id Гражданства' PRIMARY KEY AUTO_INCREMENT,
+    code    INTEGER UNIQUE          COMMENT 'код гражданства',
     version INTEGER    NOT NULL     COMMENT 'Служебное поле hibernate',
     name    VARCHAR(60) NOT NULL    COMMENT 'Название страны'
 );
