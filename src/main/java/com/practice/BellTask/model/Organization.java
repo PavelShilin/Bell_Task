@@ -8,7 +8,8 @@ import java.util.Date;
  * Организация
  */
 
-@Entity(name = "Organization")
+@Entity
+@Table(name = "Organization")
 public class Organization {
 
     @Id
@@ -19,7 +20,7 @@ public class Organization {
      * Версия
      */
 
-    @Column(name = "version", nullable = false)
+    @Version
     private Integer version;
     /**
      * Краткое название организации
@@ -57,6 +58,18 @@ public class Organization {
      */
     @Column(name = "is_active")
     private boolean status;
+
+    public Organization() {
+    }
+
+    public Organization(String name, String fullName, Long inn, Long kpp, String address, boolean status) {
+        this.name = name;
+        this.fullName = fullName;
+        this.inn = inn;
+        this.kpp = kpp;
+        this.address = address;
+        this.status = status;
+    }
 
     /**
      * getters and setters

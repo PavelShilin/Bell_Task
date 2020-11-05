@@ -7,6 +7,7 @@ import com.practice.BellTask.view.OrganizationView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.beans.Transient;
 import java.util.List;
 
@@ -25,15 +26,11 @@ public class OrganizationServiceImpl implements OrganizationService{
      *
      * @param
      */
+
     @Override
+    @Transactional
     public void add(OrganizationView view) {
-        Organization newOrg = new Organization();
-        newOrg.setName(view.name);
-        newOrg.setAddress(view.address);
-        newOrg.setFullName(view.fullName);
-        newOrg.setInn(view.inn);
-        newOrg.setKpp(view.kpp);
-        newOrg.setStatus(view.status);
+        Organization newOrg = new Organization(view.name,view.fullName,view.inn,view.kpp,view.address,view.status);
         dao.save(newOrg);
     }
 
@@ -48,7 +45,7 @@ public class OrganizationServiceImpl implements OrganizationService{
      *
      * @return {@OrganizationView}
      */
-    @Transient
+    @Transactional
     @Override
     public List<OrganizationView> organizations() {
         List<Organization> all = dao.all();

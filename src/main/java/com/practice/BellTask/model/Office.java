@@ -9,15 +9,15 @@ import java.util.Date;
 public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Integer id;
 
     /**
      * Версия
      */
 
-    @Column(name = "version", nullable = false)
-    private Date version;
+    @Version
+    private Integer version;
 
     /**
      * Организация
@@ -59,11 +59,11 @@ public class Office {
     }
 
 
-    public Date getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(Date version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 

@@ -13,10 +13,9 @@ import javax.validation.constraints.Size;
 public class OrganizationView {
 
     @NotEmpty
-    @ApiModelProperty(value = "Уникальный идентификатор",  example = "1")
-    public String id;
+    @ApiModelProperty(value = "Уникальный идентификатор", hidden = true, example = "1")
+    public Integer id;
 
-    @Size(max = 50)
     @NotEmpty(message = "name cannot be null")
     @ApiModelProperty(value = "Название", example = "Кооп три лопаты")
     public String name;
@@ -26,14 +25,10 @@ public class OrganizationView {
     public String fullName;
 
     @NotNull(message = "inn cannot be null")
-    @Min(2)
-    @Max(14)
     @ApiModelProperty(value = "ИНН", example = "272345765658")
     public Long inn;
 
     @NotNull(message = "kpp cannot be null")
-    @Min(2)
-    @Max(14)
     @ApiModelProperty(value = "КПП", example = "272345765658")
     public Long kpp;
 
@@ -53,14 +48,14 @@ public class OrganizationView {
     @Override
     public String toString() {
         return "OrganizationView{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", inn=" + inn +
                 ", kpp=" + kpp +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
-                ", isActive=" + status +
+                ", status=" + status +
                 '}';
     }
 }
