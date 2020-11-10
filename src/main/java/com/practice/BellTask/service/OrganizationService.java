@@ -1,7 +1,8 @@
 package com.practice.BellTask.service;
 
 import com.practice.BellTask.model.Organization;
-import com.practice.BellTask.view.OrganizationView;
+import com.practice.BellTask.view.organization.OrganizationListOutView;
+import com.practice.BellTask.view.organization.OrganizationListInView;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -11,17 +12,23 @@ public interface OrganizationService {
 
     /**
      * Добавить нового человека в БД
-
      */
-    void add(OrganizationView organization);
+    void add(OrganizationListInView organization);
 
     /**
-     * Получить список людей
+     * Получить список оргпнизаций
      *
      * @return {@Organization}
      */
-    List<OrganizationView> organizations();
+    List<OrganizationListOutView> organizations();
 
     Organization getOrgById(Integer id);
+
+    List<OrganizationListOutView> getOrgByName(String name);
+
+
+
+
+
 }
 

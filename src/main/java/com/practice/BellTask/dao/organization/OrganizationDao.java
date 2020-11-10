@@ -26,4 +26,13 @@ public interface OrganizationDao {
      * @param organization
      */
     void save(Organization organization);
+
+    /**
+     * *
+     * @param name
+     *
+     */
+    public List<Organization> loadByName(String name);
+
+
 }

@@ -1,7 +1,9 @@
 package com.practice.BellTask.model;
 
 import javax.persistence.*;
+import java.beans.Visibility;
 import java.util.Date;
+import java.util.Objects;
 
 
 /**
@@ -142,5 +144,26 @@ public class Organization {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Organization)) return false;
+        Organization that = (Organization) o;
+        return status == that.status &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(version, that.version) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(fullName, that.fullName) &&
+                Objects.equals(inn, that.inn) &&
+                Objects.equals(kpp, that.kpp) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(phone, that.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, version, name, fullName, inn, kpp, address, phone, status);
     }
 }
