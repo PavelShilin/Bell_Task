@@ -42,7 +42,7 @@ CREATE INDEX IF NOT EXISTS IX_User_office_id ON User(office_id);
 ALTER TABLE User ADD FOREIGN KEY (office_id) REFERENCES Office(id);
 
 CREATE TABLE IF NOT EXISTS Document(
-    id              INTEGER                COMMENT 'код документа' PRIMARY KEY AUTO_INCREMENT,
+    id              INTEGER    UNIQUE      COMMENT 'id документа',
     version         INTEGER    NOT NULL    COMMENT 'Служебное поле hibernate',
     type_id         INTEGER    NOT NULL    COMMENT 'Тип документа',
     doc_number      VARCHAR(50)            COMMENT 'Номер документа',

@@ -8,9 +8,12 @@ import java.util.Date;
 public class Document {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
 
     /**
      * Версия

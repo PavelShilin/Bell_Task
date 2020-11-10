@@ -65,7 +65,12 @@ public class User {
      * документ сотрудника
      */
 
-    @JoinColumn(name = "doc_id", referencedColumnName = "id", nullable = false)
+    @OneToOne(
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            optional = false
+    )
     private Document document;
 
     /**
