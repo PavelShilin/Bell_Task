@@ -1,16 +1,15 @@
-package com.practice.BellTask.service;
+package com.practice.belltask.service;
 
-import com.practice.BellTask.dao.organization.OrganizationDao;
-import com.practice.BellTask.model.Organization;
-import com.practice.BellTask.model.mapper.MapperFacade;
-import com.practice.BellTask.view.organization.OrganizationListInView;
-import com.practice.BellTask.view.organization.OrganizationListOutView;
+import com.practice.belltask.dao.organization.OrganizationDao;
+import com.practice.belltask.model.Organization;
+import com.practice.belltask.model.mapper.MapperFacade;
+import com.practice.belltask.view.organization.OrganizationListInView;
+import com.practice.belltask.view.organization.OrganizationListOutView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service

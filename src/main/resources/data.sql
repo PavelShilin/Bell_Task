@@ -14,11 +14,11 @@ INSERT INTO Citizenship VALUES(0,243,0,'Российская Федерация'
 INSERT INTO Document (id,version,type_id,doc_number,doc_date) VALUES (0,0,0,9342432456,'2019-02-03');
 INSERT INTO Document (id,version,type_id,doc_number,doc_date) VALUES (1,0,1,7463865459,'2018-06-07');
 
-INSERT INTO User(id,version,office_id,first_name,second_name,middle_name,position,phone,doc_id,citizenship_code,is_identified)
-        VALUES(0,0,1,'Иван','Иванов','Алексеевич','Разработчик',89004354354,0,0,TRUE);
+INSERT INTO User(id,version,office_id,first_name,second_name,middle_name,position,phone,citizenship_code,is_identified)
+        VALUES(0,0,1,'Иван','Иванов','Алексеевич','Разработчик',89004354354,0,TRUE);
 
-INSERT INTO User(id,version,office_id,first_name,second_name,middle_name,position,phone,doc_id,citizenship_code,is_identified)
-        VALUES(1,0,2,'Петр','Вавилов','Иванович','Менеджер',89116754359,1,0,TRUE);
+INSERT INTO User(id,version,office_id,first_name,second_name,middle_name,position,phone,citizenship_code,is_identified)
+        VALUES(1,0,2,'Петр','Вавилов','Иванович','Менеджер',89116754359,0,TRUE);
 
 
 

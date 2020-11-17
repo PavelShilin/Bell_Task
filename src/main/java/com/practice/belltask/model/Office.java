@@ -1,9 +1,6 @@
-package com.practice.BellTask.model;
-
-import org.springframework.lang.NonNull;
+package com.practice.belltask.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity(name = "Office")
 public class Office {
@@ -31,20 +28,20 @@ public class Office {
      * Название офиса
      */
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 50)
     private String nameOffice;
 
     /**
      * Телефон офиса
      */
 
-    @Column(name = "phone")
+    @Column(name = "phone", length = 20)
     private String phoneOffice;
 
     /**
      * Адрес офиса
      */
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, length = 50)
     private String addressOffice;
 
     /**

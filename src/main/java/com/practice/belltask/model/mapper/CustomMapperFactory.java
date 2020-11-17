@@ -1,4 +1,4 @@
-package com.practice.BellTask.model.mapper;
+package com.practice.belltask.model.mapper;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;

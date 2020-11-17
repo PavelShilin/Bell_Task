@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS User (
     middle_name      VARCHAR(50)            COMMENT 'Отчество',
     position         VARCHAR(70) NOT NULL   COMMENT 'Должность',
     phone            VARCHAR(20)            COMMENT 'Номер телефона',
-    doc_id           INTEGER  UNIQUE        COMMENT 'Код документа',
     citizenship_code INTEGER                COMMENT 'код гражданства',
     is_identified    BOOL                   COMMENT 'Статус идентификации'
 );
@@ -49,8 +48,8 @@ CREATE TABLE IF NOT EXISTS Document(
     doc_date        DATE                   COMMENT 'дата выдачи документа'
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS UX_User_doc_id  ON User(doc_id);
-ALTER TABLE User ADD FOREIGN KEY (doc_id ) REFERENCES Document(id);
+CREATE UNIQUE INDEX IF NOT EXISTS UX_User_id  ON User(id);
+ALTER TABLE User ADD FOREIGN KEY (id) REFERENCES Document(id);
 
 CREATE TABLE IF NOT EXISTS Type_document(
     id      INTEGER NOT NULL        COMMENT 'id документа' PRIMARY KEY AUTO_INCREMENT,

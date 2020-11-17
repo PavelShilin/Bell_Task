@@ -1,9 +1,8 @@
-package com.practice.BellTask.view.organization;
+package com.practice.belltask.view.organization;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotEmpty;
 
 

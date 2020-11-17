@@ -1,6 +1,6 @@
-package com.practice.BellTask.dao.organization;
+package com.practice.belltask.dao.organization;
 
-import com.practice.BellTask.model.Organization;
+import com.practice.belltask.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

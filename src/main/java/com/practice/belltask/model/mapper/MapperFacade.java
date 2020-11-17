@@ -1,4 +1,4 @@
-package com.practice.BellTask.model.mapper;
+package com.practice.belltask.model.mapper;
 import java.util.List;
 
 /**

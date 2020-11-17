@@ -1,8 +1,6 @@
-package com.practice.BellTask.model;
+package com.practice.belltask.model;
 
 import javax.persistence.*;
-import java.beans.Visibility;
-import java.util.Date;
 import java.util.Objects;
 
 
@@ -27,13 +25,13 @@ public class Organization {
     /**
      * Краткое название организации
      */
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 20)
     private String name;
 
     /**
      * Полное название организации
      */
-    @Column(name = "full_name", nullable = false, unique = true)
+    @Column(name = "full_name", nullable = false, unique = true, length = 50)
     private String fullName;
     /**
      * ИНН организации
@@ -48,12 +46,12 @@ public class Organization {
     /**
      * Адрес организации
      */
-    @Column(name = "address", nullable = false, unique = true)
+    @Column(name = "address", nullable = false, unique = true, length = 70)
     private String address;
     /**
      * Номер телефона организации
      */
-    @Column(name = "phone")
+    @Column(name = "phone", length = 20)
     private String phone;
     /**
      * Статус функционирования организации

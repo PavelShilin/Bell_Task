@@ -1,4 +1,4 @@
-package com.practice.BellTask.model;
+package com.practice.belltask.model;
 
 import javax.persistence.*;
 
@@ -30,35 +30,35 @@ public class User {
      * Имя сотрудника
      */
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
     /**
      * Фамилия сотрудника
      */
 
-    @Column(name = "second_name")
+    @Column(name = "second_name", length = 50)
     private String secondName;
 
     /**
      * отчество сотрудника
      */
 
-    @Column(name = "middle_name")
+    @Column(name = "middle_name", length = 50)
     private String middleName;
 
     /**
      * должность сотрудника
      */
 
-    @Column(name = "position", nullable = false)
+    @Column(name = "position", nullable = false, length = 70)
     private String position;
 
     /**
      * номер телефона сотрудника
      */
 
-    @Column(name = "phone")
+    @Column(name = "phone", length = 20)
     private String phone;
 
     /**

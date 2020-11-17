@@ -1,6 +1,6 @@
-package com.practice.BellTask.dao.organization;
+package com.practice.belltask.dao.organization;
 
-import com.practice.BellTask.model.Organization;
+import com.practice.belltask.model.Organization;
 
 import java.util.List;
 

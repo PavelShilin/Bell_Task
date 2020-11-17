@@ -1,4 +1,4 @@
-package com.practice.BellTask.model;
+package com.practice.belltask.model;
 
 import javax.persistence.*;
 
@@ -28,7 +28,7 @@ public class Citizenship {
      * Название Государства
      */
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 60)
     private String nameCitizenship;
 
     /**

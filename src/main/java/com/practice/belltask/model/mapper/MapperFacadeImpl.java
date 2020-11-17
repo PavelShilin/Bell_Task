@@ -1,4 +1,4 @@
-package com.practice.BellTask.model.mapper;
+package com.practice.belltask.model.mapper;
 
 import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;

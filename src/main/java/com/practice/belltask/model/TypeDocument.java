@@ -1,4 +1,4 @@
-package com.practice.BellTask.model;
+package com.practice.belltask.model;
 
 import javax.persistence.*;
 
@@ -29,7 +29,7 @@ public class TypeDocument {
      * Общее название документа (Псспорт РФ, военный билет, и т. д.)
      */
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 60)
     private String nameTypeDocument;
 
     /**

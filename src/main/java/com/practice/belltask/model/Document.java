@@ -1,4 +1,4 @@
-package com.practice.BellTask.model;
+package com.practice.belltask.model;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -34,7 +34,7 @@ public class Document {
      * Номер документа
      */
 
-    @Column(name = "doc_number")
+    @Column(name = "doc_number", length = 50)
     private String docNumber;
 
     /**
@@ -42,6 +42,7 @@ public class Document {
      */
 
     @Column(name = "doc_date")
+    @Temporal(TemporalType.DATE)
     private Date docDate;
 
     /**
