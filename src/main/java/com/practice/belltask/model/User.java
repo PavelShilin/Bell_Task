@@ -19,14 +19,6 @@ public class User {
     private Integer version;
 
     /**
-     * Офис в котором работает сотрудник
-     */
-
-    @OneToOne
-    @JoinColumn(name = "office_id", referencedColumnName = "id", nullable = false)
-    private Office office;
-
-    /**
      * Имя сотрудника
      */
 
@@ -62,6 +54,13 @@ public class User {
     private String phone;
 
     /**
+     * Статус сотрудника
+     */
+
+    @Column(name = "is_identified")
+    private boolean statusUser;
+
+    /**
      * документ сотрудника
      */
 
@@ -74,19 +73,20 @@ public class User {
     private Document document;
 
     /**
+     * Офис в котором работает сотрудник
+     */
+
+    @OneToOne
+    @JoinColumn(name = "office_id", referencedColumnName = "id", nullable = false)
+    private Office office;
+
+    /**
      * Гражданство
      */
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "citizenship_code", referencedColumnName = "id", nullable = false)
     private Citizenship citizenship;
-
-    /**
-     * Статус сотрудника
-     */
-
-    @Column(name = "is_identified")
-    private boolean statusUser;
 
     /**
      * getters and setters

@@ -1,8 +1,10 @@
 package com.practice.belltask.service;
 
 import com.practice.belltask.dao.organization.OrganizationDao;
+import com.practice.belltask.dto.organization.OrganizationSaveDto;
 import com.practice.belltask.model.Organization;
 import com.practice.belltask.model.mapper.MapperFacade;
+import com.practice.belltask.view.organization.OrganizationIdView;
 import com.practice.belltask.view.organization.OrganizationListInView;
 import com.practice.belltask.view.organization.OrganizationListOutView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OrganizationServiceImpl implements OrganizationService{
+public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationDao dao;
     private final MapperFacade mapperFacade;
 
@@ -22,40 +24,23 @@ public class OrganizationServiceImpl implements OrganizationService{
         this.dao = dao;
         this.mapperFacade = mapperFacade;
     }
-    /**
-     * Добавить нового человека в БД
-     *
-     * @param
-     */
+
 
     @Override
-    @Transactional
-    public void add(OrganizationListInView view) {
-    }
-
-    @Override
-    public Organization getOrgById(Integer id) {
-        ///Organization orgView = new OrganizationListInView();
-        return dao.loadById(id);
-    }
-
-    /**
-     * Получить список людей
-     *
-     * @return {@OrganizationView}
-     */
-    @Transactional
-    @Override
-    public List<OrganizationListOutView> organizations() {
-        List<Organization> all = dao.all();
+    public List<OrganizationListOutView> filter(OrganizationListInView filter) {
+        List<Organization> all = dao.buildCriteria(filter.name, filter.inn, filter.isActive);
         return mapperFacade.mapAsList(all, OrganizationListOutView.class);
     }
 
     @Override
-    public List<OrganizationListOutView> getOrgByName(String name) {
-        List<Organization> newListOrg = new ArrayList<>(dao.loadByName(name));
-        return mapperFacade.mapAsList(newListOrg, OrganizationListOutView.class);
+    public OrganizationIdView getId(Integer id) {
 
+        return mapperFacade.map(dao.loadById(id), OrganizationIdView.class);
     }
 
+    @Override
+    @Transactional
+    public void save(OrganizationSaveDto org) {
+        dao.save(mapperFacade.map(org, Organization.class));
+    }
 }

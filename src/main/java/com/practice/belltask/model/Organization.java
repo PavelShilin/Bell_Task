@@ -57,7 +57,7 @@ public class Organization {
      * Статус функционирования организации
      */
     @Column(name = "is_active")
-    private boolean status;
+    private Boolean isActive;
 
     public Organization() {
     }
@@ -68,7 +68,7 @@ public class Organization {
         this.inn = inn;
         this.kpp = kpp;
         this.address = address;
-        this.status = status;
+        this.isActive = status;
     }
 
     /**
@@ -137,11 +137,11 @@ public class Organization {
     }
 
     public boolean isStatus() {
-        return status;
+        return isActive;
     }
 
     public void setStatus(boolean status) {
-        this.status = status;
+        this.isActive = status;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class Organization {
         if (this == o) return true;
         if (!(o instanceof Organization)) return false;
         Organization that = (Organization) o;
-        return status == that.status &&
+        return isActive == that.isActive &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(version, that.version) &&
                 Objects.equals(name, that.name) &&
@@ -162,6 +162,6 @@ public class Organization {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, version, name, fullName, inn, kpp, address, phone, status);
+        return Objects.hash(id, version, name, fullName, inn, kpp, address, phone, isActive);
     }
 }

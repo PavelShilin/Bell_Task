@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 
-@ApiModel(description = "Организация")
+@ApiModel(description = "Организация-в")
 public class OrganizationListOutView {
 
-    @NotNull(message = "Невведено название орг-ции")
+    @NotNull()
     @ApiModelProperty(value = "id", example = "232")
     public Integer id;
 
@@ -18,14 +18,14 @@ public class OrganizationListOutView {
     public Long inn;
 
     @ApiModelProperty(value = "Статус", example = "Работает")
-    public boolean status;
+    public boolean isActive;
 
     @Override
     public String toString() {
         return "OrganizationListOutView{" +
                 "id=" + id +
                 ", inn=" + inn +
-                ", status=" + status +
+                ", status=" + isActive +
                 '}';
     }
 
@@ -34,13 +34,13 @@ public class OrganizationListOutView {
         if (this == o) return true;
         if (!(o instanceof OrganizationListOutView)) return false;
         OrganizationListOutView that = (OrganizationListOutView) o;
-        return status == that.status &&
+        return isActive == that.isActive &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(inn, that.inn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, inn, status);
+        return Objects.hash(id, inn, isActive);
     }
 }

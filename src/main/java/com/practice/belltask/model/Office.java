@@ -16,13 +16,6 @@ public class Office {
     @Version
     private Integer version;
 
-    /**
-     * Организация
-     */
-
-    @OneToOne
-    @JoinColumn(name = "org_id", referencedColumnName = "id", nullable = false)
-    private Organization organization;
 
     /**
      * Название офиса
@@ -50,6 +43,14 @@ public class Office {
 
     @Column(name = "is_active", nullable = false)
     private String statusOffice;
+
+    /**
+     * Организация
+     */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "org_id", referencedColumnName = "id", nullable = false)
+    private Organization organization;
 
     public Integer getId() {
         return id;

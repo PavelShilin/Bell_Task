@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS Document(
     doc_date        DATE                   COMMENT 'дата выдачи документа'
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS UX_User_id  ON User(id);
-ALTER TABLE User ADD FOREIGN KEY (id) REFERENCES Document(id);
+CREATE UNIQUE INDEX IF NOT EXISTS UX_Document_id  ON Document(id);
+ALTER TABLE Document ADD FOREIGN KEY (id) REFERENCES User(id);
 
 CREATE TABLE IF NOT EXISTS Type_document(
     id      INTEGER NOT NULL        COMMENT 'id документа' PRIMARY KEY AUTO_INCREMENT,

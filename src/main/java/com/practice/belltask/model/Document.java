@@ -11,24 +11,12 @@ public class Document {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    private User user;
-
     /**
      * Версия
      */
 
     @Version
     private Integer version;
-
-    /**
-     * Тип документа
-     */
-
-    @OneToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
-    private TypeDocument typeDocument;
 
     /**
      * Номер документа
@@ -44,6 +32,18 @@ public class Document {
     @Column(name = "doc_date")
     @Temporal(TemporalType.DATE)
     private Date docDate;
+
+    /**
+     * Тип документа
+     */
+
+    @OneToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
+    private TypeDocument typeDocument;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
 
     /**
      * getters and setters

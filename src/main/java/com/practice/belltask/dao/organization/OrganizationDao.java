@@ -33,6 +33,8 @@ public interface OrganizationDao {
      *
      */
     public List<Organization> loadByName(String name);
+    public List<Organization> buildCriteria(String name, Long inn, Boolean is_status);
+
 
 
 }

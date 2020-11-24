@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import java.util.List;
@@ -60,6 +61,30 @@ public class OrganizationDaoImpl implements OrganizationDao {
         return query.getResultList();
     }
 
+    @Override
+    public List<Organization> buildCriteria(String name, Long inn, Boolean is_status) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Organization> criteria = cb.createQuery(Organization.class);
+        Root<Organization> organizationRoot = criteria.from(Organization.class);
+        Predicate cond = null;
+        if(inn != null && is_status != null ) {
+            cond = cb.and(cb.equal(organizationRoot.get("name"), name), cb.equal(organizationRoot.get("inn"), inn),cb.equal(organizationRoot.get("status"), is_status));
+        }
+        if (inn != null && is_status == null){
+            cond = cb.and(cb.equal(organizationRoot.get("name"), name), cb.equal(organizationRoot.get("inn"), inn));
+        }
+        if (inn == null && is_status != null){
+            cond = cb.and(cb.equal(organizationRoot.get("name"), name), cb.equal(organizationRoot.get("status"), is_status));
+        }
+        if (inn == null && is_status == null){
+            cond = cb.equal(organizationRoot.get("name"), name);
+        }
+        // criteria.where(cb.equal(organizationRoot.get("name"), name));
+        CriteriaQuery<Organization> cq = criteria.select(organizationRoot).where(cond);
+        TypedQuery typedQuery = em.createQuery(cq);
+        return (List<Organization>) typedQuery.getResultList();
+    }
+
     private CriteriaQuery<Organization> buildCriteria(String name) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Organization> criteria = builder.createQuery(Organization.class);
@@ -69,4 +94,8 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
         return criteria;
     }
+
+
+
+
 }
