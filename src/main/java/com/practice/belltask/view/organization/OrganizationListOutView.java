@@ -17,8 +17,8 @@ public class OrganizationListOutView {
     @ApiModelProperty(value = "ИНН", example = "272345765658")
     public Long inn;
 
-    @ApiModelProperty(value = "Статус", example = "Работает")
-    public boolean isActive;
+    @ApiModelProperty
+    public Boolean isActive = true;
 
     @Override
     public String toString() {

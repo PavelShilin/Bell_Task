@@ -1,5 +1,6 @@
 package com.practice.belltask.dao.organization;
 
+import com.practice.belltask.dto.organization.OrganizationUpdateDto;
 import com.practice.belltask.model.Organization;
 
 import java.util.List;
@@ -33,7 +34,10 @@ public interface OrganizationDao {
      *
      */
     public List<Organization> loadByName(String name);
+
     public List<Organization> buildCriteria(String name, Long inn, Boolean is_status);
+
+    void update (OrganizationUpdateDto organization);
 
 
 

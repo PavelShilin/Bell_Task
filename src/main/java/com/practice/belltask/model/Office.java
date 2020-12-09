@@ -1,6 +1,8 @@
 package com.practice.belltask.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 @Entity(name = "Office")
 public class Office {
@@ -16,33 +18,35 @@ public class Office {
     @Version
     private Integer version;
 
-
     /**
      * Название офиса
      */
 
-    @Column(name = "name", nullable = false, length = 50)
-    private String nameOffice;
+    @NotBlank
+    @Column(name = "name", length = 50)
+    private String name;
 
     /**
      * Телефон офиса
      */
 
     @Column(name = "phone", length = 20)
-    private String phoneOffice;
+    private String phone;
 
     /**
      * Адрес офиса
      */
-    @Column(name = "address", nullable = false, length = 50)
-    private String addressOffice;
+
+    @NotBlank
+    @Column(name = "address", length = 50)
+    private String address;
 
     /**
      * Статус офиса
      */
 
     @Column(name = "is_active", nullable = false)
-    private String statusOffice;
+    private Boolean isActive;
 
     /**
      * Организация
@@ -52,10 +56,24 @@ public class Office {
     @JoinColumn(name = "org_id", referencedColumnName = "id", nullable = false)
     private Organization organization;
 
+    public Office() {
+    }
+
+    ;
+
+    public Office(Integer id, Integer version, String name, String phone, String address, Boolean isActive, Organization organization) {
+        this.id = id;
+        this.version = version;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.isActive = isActive;
+        this.organization = organization;
+    }
+
     public Integer getId() {
         return id;
     }
-
 
     public Integer getVersion() {
         return version;
@@ -74,34 +92,53 @@ public class Office {
     }
 
     public String getNameOffice() {
-        return nameOffice;
+        return name;
     }
 
     public void setNameOffice(String nameOffice) {
-        this.nameOffice = nameOffice;
+        this.name = nameOffice;
     }
 
     public String getPhoneOffice() {
-        return phoneOffice;
+        return phone;
     }
 
     public void setPhoneOffice(String phoneOffice) {
-        this.phoneOffice = phoneOffice;
+        this.phone = phoneOffice;
     }
 
     public String getAddressOffice() {
-        return addressOffice;
+        return address;
     }
 
     public void setAddressOffice(String addressOffice) {
-        this.addressOffice = addressOffice;
+        this.address = addressOffice;
     }
 
-    public String getStatusOffice() {
-        return statusOffice;
+    public Boolean getStatusOffice() {
+        return isActive;
     }
 
-    public void setStatusOffice(String statusOffice) {
-        this.statusOffice = statusOffice;
+    public void setStatusOffice(Boolean statusOffice) {
+        this.isActive = statusOffice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Office)) return false;
+        Office office = (Office) o;
+        return Objects.equals(id, office.id) &&
+                Objects.equals(version, office.version) &&
+                Objects.equals(name, office.name) &&
+                Objects.equals(phone, office.phone) &&
+                Objects.equals(address, office.address) &&
+                Objects.equals(isActive, office.isActive) &&
+                Objects.equals(organization, office.organization);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, version, name, phone, address, isActive, organization);
     }
 }

@@ -1,6 +1,8 @@
 package com.practice.belltask.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 
@@ -25,28 +27,34 @@ public class Organization {
     /**
      * Краткое название организации
      */
-    @Column(name = "name", nullable = false, length = 20)
+    @NotBlank
+    @Column(name = "name", length = 20)
     private String name;
 
     /**
      * Полное название организации
      */
-    @Column(name = "full_name", nullable = false, unique = true, length = 50)
+    @NotBlank
+    @Column(name = "full_name", unique = true, length = 50)
     private String fullName;
     /**
      * ИНН организации
      */
-    @Column(name = "inn", nullable = false, unique = true)
+
+    @NotNull
+    @Column(name = "inn", unique = true)
     private Long inn;
     /**
      * КПП организации
      */
-    @Column(name = "kpp", nullable = false)
+    @NotNull
+    @Column(name = "kpp")
     private Long kpp;
     /**
      * Адрес организации
      */
-    @Column(name = "address", nullable = false, unique = true, length = 70)
+    @NotBlank
+    @Column(name = "address", unique = true, length = 70)
     private String address;
     /**
      * Номер телефона организации
@@ -136,11 +144,11 @@ public class Organization {
         this.phone = phone;
     }
 
-    public boolean isStatus() {
+    public Boolean isStatus() {
         return isActive;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.isActive = status;
     }
 

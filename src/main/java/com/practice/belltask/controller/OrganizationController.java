@@ -1,11 +1,10 @@
 package com.practice.belltask.controller;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.practice.belltask.dto.ResponseDto;
 import com.practice.belltask.dto.SuccessResponseDto;
 import com.practice.belltask.dto.organization.OrganizationSaveDto;
-import com.practice.belltask.model.Organization;
-import com.practice.belltask.service.OrganizationService;
+import com.practice.belltask.dto.organization.OrganizationUpdateDto;
+import com.practice.belltask.service.organization.OrganizationService;
 import com.practice.belltask.view.organization.OrganizationIdView;
 import com.practice.belltask.view.organization.OrganizationListInView;
 import com.practice.belltask.view.organization.OrganizationListOutView;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -36,8 +34,7 @@ public class OrganizationController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    public ResponseEntity<ResponseDto<List<OrganizationListOutView>>> list(@RequestBody @Valid OrganizationListInView org, BindingResult binding) {
-
+    public ResponseEntity<ResponseDto<List<@Valid OrganizationListOutView>>> list(@RequestBody @Valid OrganizationListInView org, BindingResult binding) {
         if (binding.hasErrors()) {
             return errorResponse(binding);
         } else
@@ -47,7 +44,7 @@ public class OrganizationController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<ResponseDto<OrganizationIdView>> get(@PathVariable int id) {
         OrganizationIdView org = service.getId(id);
-        if (org == null) return errorResponse("Organization not found", HttpStatus.NOT_FOUND);
+        if (org == null) return errorResponse("Organization not found", HttpStatus.BAD_GATEWAY);
         return dataResponse(org);
     }
 
@@ -60,11 +57,12 @@ public class OrganizationController {
         return successResponse();
     }
 
-
-/*    @GetMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<Organization> customOrganization(@PathVariable("id") Integer id) {
-        return new ResponseEntity<Organization>(service.getOrgById(id), HttpStatus.OK);
-    }*/
-
-
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResponseEntity<ResponseDto<SuccessResponseDto>> update(@RequestBody @Valid OrganizationUpdateDto dto, BindingResult binding) {
+        if (binding.hasErrors()) {
+            return errorResponse(binding);
+        }
+        service.update(dto);
+        return successResponse();
+    }
 }

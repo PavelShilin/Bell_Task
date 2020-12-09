@@ -2,15 +2,19 @@ package com.practice.belltask.dto.organization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-
 @ApiModel
-public class OrganizationSaveDto  {
+public class OrganizationUpdateDto {
 
-    @NotBlank(message = "Name is empty")
+    @NotNull
+    @JsonProperty(required = true)
+    private Integer id;
+
+    @NotBlank
     @JsonProperty(required = true)
     private String name;
 
@@ -19,7 +23,7 @@ public class OrganizationSaveDto  {
     private String fullName;
 
     @NotNull
-    @Pattern(regexp = "[0-9]{12}", message = "Inn must contains 12 digits")
+    @Pattern(regexp = "[0-9]{12}", message = "inn must have 12 symbols")
     @JsonProperty(required = true)
     private Long inn;
 
@@ -34,7 +38,15 @@ public class OrganizationSaveDto  {
     private String phone;
 
     @JsonProperty(value = "isActive")
-    private boolean active = true;
+    private Boolean active = true;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -54,11 +66,11 @@ public class OrganizationSaveDto  {
     }
 
 
-    public long getInn() {
+    public Long getInn() {
         return inn;
     }
 
-    public void setInn(Long inn) {
+    public void setInn(long inn) {
         this.inn = inn;
     }
 
@@ -89,11 +101,11 @@ public class OrganizationSaveDto  {
     }
 
 
-    public boolean isActive() {
+    public Boolean getStatus() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setStatus(Boolean active) {
         this.active = active;
     }
 

@@ -4,9 +4,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @ApiModel
-public class OrganizationIdView {
+public class OrganizationIdView  {
 
     @NotNull()
     public Integer id;

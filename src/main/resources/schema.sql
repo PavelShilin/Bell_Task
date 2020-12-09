@@ -1,11 +1,12 @@
+
 CREATE TABLE IF NOT EXISTS Organization (
     id        INTEGER                      COMMENT 'Уникальный номер' PRIMARY KEY AUTO_INCREMENT,
     version   INTEGER NOT NULL             COMMENT 'Служебное поле hibernate',
-    name      VARCHAR(20) NOT NULL         COMMENT 'Краткое название организации',
-    full_name VARCHAR (50) NOT NULL UNIQUE COMMENT 'Полное название организации',
-    inn       BIGINT NOT NULL UNIQUE       COMMENT 'ИНН организации',
+    name      VARCHAR(60) NOT NULL         COMMENT 'Краткое название организации',
+    full_name VARCHAR (80)                 COMMENT 'Полное название организации',
+    inn       BIGINT NOT NULL              COMMENT 'ИНН организации',
     kpp       BIGINT NOT NULL              COMMENT 'КПП организации',
-    address   VARCHAR(70) NOT NULL UNIQUE  COMMENT 'Юр. Адрес',
+    address   VARCHAR(70) NOT NULL         COMMENT 'Юр. Адрес',
     phone     VARCHAR(20)                  COMMENT 'Телефонный номер',
     is_active BOOL                         COMMENT 'Состояние'
 );
@@ -41,7 +42,7 @@ CREATE INDEX IF NOT EXISTS IX_User_office_id ON User(office_id);
 ALTER TABLE User ADD FOREIGN KEY (office_id) REFERENCES Office(id);
 
 CREATE TABLE IF NOT EXISTS Document(
-    id              INTEGER    UNIQUE      COMMENT 'id документа',
+    id              INTEGER                COMMENT 'id документа',
     version         INTEGER    NOT NULL    COMMENT 'Служебное поле hibernate',
     type_id         INTEGER    NOT NULL    COMMENT 'Тип документа',
     doc_number      VARCHAR(50)            COMMENT 'Номер документа',
@@ -53,7 +54,7 @@ ALTER TABLE Document ADD FOREIGN KEY (id) REFERENCES User(id);
 
 CREATE TABLE IF NOT EXISTS Type_document(
     id      INTEGER NOT NULL        COMMENT 'id документа' PRIMARY KEY AUTO_INCREMENT,
-    code    INTEGER UNIQUE          COMMENT 'Код документа',
+    code    INTEGER                 COMMENT 'Код документа',
     version INTEGER    NOT NULL     COMMENT 'Служебное поле hibernate',
     name    VARCHAR(60) NOT NULL    COMMENT 'Название документа'
 );
@@ -63,7 +64,7 @@ ALTER TABLE Document ADD FOREIGN KEY (type_id) REFERENCES Type_document(id);
 
 CREATE TABLE IF NOT EXISTS  Citizenship(
     id      INTEGER NOT NULL        COMMENT 'id Гражданства' PRIMARY KEY AUTO_INCREMENT,
-    code    INTEGER UNIQUE          COMMENT 'код гражданства',
+    code    INTEGER                 COMMENT 'код гражданства',
     version INTEGER    NOT NULL     COMMENT 'Служебное поле hibernate',
     name    VARCHAR(60) NOT NULL    COMMENT 'Название страны'
 );
