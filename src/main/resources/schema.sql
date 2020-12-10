@@ -15,10 +15,10 @@ COMMENT ON TABLE Organization IS 'Организация';
 CREATE TABLE IF NOT EXISTS Office(
     id        INTEGER                COMMENT 'Уникальный номер' PRIMARY KEY AUTO_INCREMENT,
     version   INTEGER     NOT NULL   COMMENT 'Служебное поле hibernate',
-    org_id    INTEGER     NOT NULL   COMMENT 'id организации',
-    name      VARCHAR(50) NOT NULL   COMMENT 'Название офиса ',
+    org_id    INTEGER                COMMENT 'id организации',
+    name      VARCHAR(50)            COMMENT 'Название офиса ',
     phone     VARCHAR(20)            COMMENT 'телефон офиса',
-    address   VARCHAR(50) NOT NULL   COMMENT 'адрес офиса',
+    address   VARCHAR(50)            COMMENT 'адрес офиса',
     is_active BOOL                   COMMENT 'Статус'
 );
 

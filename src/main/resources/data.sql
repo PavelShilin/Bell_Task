@@ -5,6 +5,8 @@ INSERT INTO  Organization(version,name,full_name,inn,kpp,address,phone,is_active
 
 INSERT INTO Office(version,org_id,name,phone,address,is_active) VALUES( 0,1, 'Главный офис',89004454323,'Москва,ул.Вавилова,д.19',TRUE);
 INSERT INTO Office(version,org_id,name,phone,address,is_active) VALUES( 0,2, 'Главный офис второй организации',89634744341,'Москва,ул.Вахрушева,д.8',TRUE);
+INSERT INTO Office(version,org_id,name,phone,address,is_active) VALUES( 0,1, 'Второстепенный офис',89444454323,'Москва,ул.Вавилова',TRUE);
+INSERT INTO Office(version,org_id,name,phone,address,is_active) VALUES( 0,2, 'Второстепенный офис второй организации',89634722341,'Москва,ул.Вахрушев',TRUE);
 
 INSERT INTO Type_document VALUES(0,21,0,'Паспорт РФ');
 INSERT INTO Type_document VALUES(1,10,0,'Паспорт иностранного гражданина');

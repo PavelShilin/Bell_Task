@@ -1,30 +1,33 @@
 package com.practice.belltask.service.office;
 
 import com.practice.belltask.dao.office.OfficeDao;
+import com.practice.belltask.dao.organization.OrganizationDao;
+import com.practice.belltask.dto.office.OfficeSaveDto;
 import com.practice.belltask.model.Office;
 import com.practice.belltask.model.mapper.MapperFacade;
 import com.practice.belltask.view.office.OfficeIdView;
 import com.practice.belltask.view.office.OfficeListInView;
 import com.practice.belltask.view.office.OfficeListOutView;
-
-import com.practice.belltask.view.organization.OrganizationIdView;
 import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class OfficeServiceImpl implements  OfficeService{
+public class OfficeServiceImpl implements OfficeService {
 
     private final OfficeDao dao;
+    private final OrganizationDao organizationDao;
     private final MapperFacade mapperFacade;
     private final MapperFactory mapperFactory;
 
     @Autowired
-    public OfficeServiceImpl(OfficeDao dao, MapperFacade mapperFacade, MapperFactory mapperFactory) {
+    public OfficeServiceImpl(OfficeDao dao, OrganizationDao organizationdao, OrganizationDao organizationDao, MapperFacade mapperFacade, MapperFactory mapperFactory) {
         this.dao = dao;
+        this.organizationDao = organizationDao;
         this.mapperFacade = mapperFacade;
         this.mapperFactory = mapperFactory;
     }
@@ -38,8 +41,19 @@ public class OfficeServiceImpl implements  OfficeService{
     @Override
     @Transactional
     public OfficeIdView getOfficeById(Integer id) {
-        //Office office = dao.loadById(id);
-        System.out.println(dao.loadById(id).getNameOffice()+" -  name office-  - -- -"+ dao.loadById(id).getAddressOffice()+"    - address");
-        return mapperFactory.getMapperFacade(Office.class, OfficeIdView.class).map(dao.loadById(id));
+        return (mapperFacade.map(dao.loadOfficeById(id), OfficeIdView.class));
+    }
+
+
+    @Override
+    @Transactional
+    public void save(OfficeSaveDto office) {
+        Office tempOffice = new Office();
+        tempOffice.setName(office.getName());
+        tempOffice.setAddress(office.getAddress());
+        tempOffice.setIsActive(office.getIsActive());
+        tempOffice.setOrganization(organizationDao.loadById(office.getOrgId()));
+        dao.save(mapperFacade.map(tempOffice, Office.class));
+
     }
 }

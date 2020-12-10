@@ -22,7 +22,7 @@ public class Office {
      * Название офиса
      */
 
-    @NotBlank
+
     @Column(name = "name", length = 50)
     private String name;
 
@@ -37,7 +37,7 @@ public class Office {
      * Адрес офиса
      */
 
-    @NotBlank
+
     @Column(name = "address", length = 50)
     private String address;
 
@@ -45,7 +45,7 @@ public class Office {
      * Статус офиса
      */
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Boolean isActive;
 
     /**
@@ -53,13 +53,12 @@ public class Office {
      */
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "org_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "org_id", referencedColumnName = "id")
     private Organization organization;
 
     public Office() {
     }
 
-    ;
 
     public Office(Integer id, Integer version, String name, String phone, String address, Boolean isActive, Organization organization) {
         this.id = id;
@@ -75,6 +74,10 @@ public class Office {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getVersion() {
         return version;
     }
@@ -83,44 +86,44 @@ public class Office {
         this.version = version;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean active) {
+        isActive = active;
+    }
+
     public Organization getOrganization() {
         return organization;
     }
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
-    }
-
-    public String getNameOffice() {
-        return name;
-    }
-
-    public void setNameOffice(String nameOffice) {
-        this.name = nameOffice;
-    }
-
-    public String getPhoneOffice() {
-        return phone;
-    }
-
-    public void setPhoneOffice(String phoneOffice) {
-        this.phone = phoneOffice;
-    }
-
-    public String getAddressOffice() {
-        return address;
-    }
-
-    public void setAddressOffice(String addressOffice) {
-        this.address = addressOffice;
-    }
-
-    public Boolean getStatusOffice() {
-        return isActive;
-    }
-
-    public void setStatusOffice(Boolean statusOffice) {
-        this.isActive = statusOffice;
     }
 
     @Override

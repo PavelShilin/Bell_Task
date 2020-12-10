@@ -1,4 +1,5 @@
 package com.practice.belltask.service.organization;
+
 import com.practice.belltask.dao.organization.OrganizationDao;
 import com.practice.belltask.dto.organization.OrganizationSaveDto;
 import com.practice.belltask.dto.organization.OrganizationUpdateDto;
@@ -9,6 +10,7 @@ import com.practice.belltask.view.organization.OrganizationListInView;
 import com.practice.belltask.view.organization.OrganizationListOutView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -38,7 +40,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     public void save(OrganizationSaveDto org) {
         dao.save(mapperFacade.map(org, Organization.class));
     }
-
 
     @Override
     @Transactional

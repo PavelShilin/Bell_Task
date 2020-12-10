@@ -67,6 +67,8 @@ public class Organization {
     @Column(name = "is_active")
     private Boolean isActive;
 
+
+
     public Organization() {
     }
 
@@ -144,7 +146,7 @@ public class Organization {
         this.phone = phone;
     }
 
-    public Boolean isStatus() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
