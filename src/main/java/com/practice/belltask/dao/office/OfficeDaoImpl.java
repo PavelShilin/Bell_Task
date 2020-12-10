@@ -56,7 +56,7 @@ public class OfficeDaoImpl implements OfficeDao {
         return em.find(Office.class, id);
     }
 
-    @Transactional
+
     @Override
     public void save(Office office, Integer orgId) {
         Office tempOffice = new Office();
@@ -71,6 +71,7 @@ public class OfficeDaoImpl implements OfficeDao {
     public Boolean contains(Integer id) {
         Query query = em.createQuery("Select o FROM Office o WHERE o.id = :id");
         query.setParameter("id", id);
-        return query.getSingleResult() != null;
+        List<?> list = query.getResultList();
+        return !list.isEmpty();
     }
 }

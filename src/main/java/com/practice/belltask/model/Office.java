@@ -53,7 +53,7 @@ public class Office {
      */
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "org_id", referencedColumnName = "id")
+    @JoinColumn(name = "org_id", referencedColumnName = "id",nullable = false)
     private Organization organization;
 
     public Office() {

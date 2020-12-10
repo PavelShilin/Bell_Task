@@ -16,7 +16,7 @@ import java.util.List;
 @Validated
 public interface OfficeService {
 
-    List<OfficeListOutView> filter(OfficeListInView filter) throws NotFoundException;
+    List<OfficeListOutView> filter(OfficeListInView filter);
 
     OfficeIdView getOfficeById(Integer id);
 

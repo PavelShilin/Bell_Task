@@ -10,7 +10,7 @@ import com.practice.belltask.view.office.OfficeIdView;
 import com.practice.belltask.view.office.OfficeListInView;
 import com.practice.belltask.view.office.OfficeListOutView;
 import io.swagger.annotations.Api;
-import javassist.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +40,7 @@ public class OfficeController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    public ResponseEntity<ResponseDto<List<OfficeListOutView>>> list(@RequestBody @Valid OfficeListInView filter, BindingResult binding) throws NotFoundException {
+    public ResponseEntity<ResponseDto<List<OfficeListOutView>>> list(@RequestBody @Valid OfficeListInView filter, BindingResult binding) {
         if (binding.hasErrors()) {
             return errorResponse(binding);
         }

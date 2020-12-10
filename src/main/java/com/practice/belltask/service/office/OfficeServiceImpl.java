@@ -1,5 +1,6 @@
 package com.practice.belltask.service.office;
 
+import com.practice.belltask.controller.advice.NotFoundException;
 import com.practice.belltask.dao.office.OfficeDao;
 import com.practice.belltask.dao.organization.OrganizationDao;
 import com.practice.belltask.dto.office.OfficeSaveDto;
@@ -34,6 +35,9 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public List<OfficeListOutView> filter(OfficeListInView filter) {
+        if (!dao.contains(filter.orgId)) {
+            throw new NotFoundException("Organization with id: " + filter.orgId + " not found");
+        }
         List<Office> all = dao.filter(filter.orgId, filter.name, filter.phone, filter.isActive);
         return mapperFacade.mapAsList(all, OfficeListOutView.class);
     }
@@ -48,7 +52,14 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void save(OfficeSaveDto office) {
+        checkOrganization(office.getOrgId());
         dao.save(mapperFacade.map(office, Office.class), office.getOrgId());
 
+    }
+
+    public void checkOrganization(Integer orgId) {
+        if (orgId != null && !dao.contains(orgId)) {
+            throw new NotFoundException("Organization with id: " + orgId + " not found");
+        }
     }
 }
