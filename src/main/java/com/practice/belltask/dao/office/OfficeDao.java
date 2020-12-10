@@ -12,6 +12,6 @@ public interface OfficeDao {
 
     Boolean contains(Integer id);
 
-    void save(Office office);
+    void save(Office office, Integer orgId);
 
 }

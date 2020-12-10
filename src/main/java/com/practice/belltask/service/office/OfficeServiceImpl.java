@@ -48,12 +48,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void save(OfficeSaveDto office) {
-        Office tempOffice = new Office();
-        tempOffice.setName(office.getName());
-        tempOffice.setAddress(office.getAddress());
-        tempOffice.setIsActive(office.getIsActive());
-        tempOffice.setOrganization(organizationDao.loadById(office.getOrgId()));
-        dao.save(mapperFacade.map(tempOffice, Office.class));
+        dao.save(mapperFacade.map(office, Office.class), office.getOrgId());
 
     }
 }

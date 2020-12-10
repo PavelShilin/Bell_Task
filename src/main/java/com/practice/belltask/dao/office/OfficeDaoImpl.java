@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,9 +56,15 @@ public class OfficeDaoImpl implements OfficeDao {
         return em.find(Office.class, id);
     }
 
+    @Transactional
     @Override
-    public void save(Office office) {
-        em.persist(office);
+    public void save(Office office, Integer orgId) {
+        Office tempOffice = new Office();
+        tempOffice.setName(office.getName());
+        tempOffice.setAddress(office.getAddress());
+        tempOffice.setIsActive(office.getIsActive());
+        tempOffice.setOrganization(organizationDao.loadById(orgId));
+        em.persist(tempOffice);
     }
 
     @Override

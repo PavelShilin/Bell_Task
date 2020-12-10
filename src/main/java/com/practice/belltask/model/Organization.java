@@ -3,6 +3,8 @@ package com.practice.belltask.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -67,6 +69,8 @@ public class Organization {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    List<Office> offices = new ArrayList<>();
 
 
     public Organization() {
@@ -84,6 +88,16 @@ public class Organization {
     /**
      * getters and setters
      */
+
+    public void addOffices(Office office) {
+        offices.add(office);
+        office.setOrganization(this);
+    }
+
+    public void removeOffices(Office office) {
+        offices.remove(office);
+        office.setOrganization(null);
+    }
 
     public Integer getId() {
         return id;
