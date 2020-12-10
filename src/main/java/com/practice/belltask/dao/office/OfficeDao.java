@@ -1,4 +1,7 @@
 package com.practice.belltask.dao.office;
+
+import com.practice.belltask.dto.office.OfficeUpdateDto;
+
 import com.practice.belltask.model.Office;
 
 
@@ -13,5 +16,7 @@ public interface OfficeDao {
     Boolean contains(Integer id);
 
     void save(Office office, Integer orgId);
+
+    void update(OfficeUpdateDto office);
 
 }

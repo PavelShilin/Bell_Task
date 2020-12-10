@@ -1,7 +1,9 @@
 package com.practice.belltask.dao.office;
 
 import com.practice.belltask.dao.organization.OrganizationDao;
+import com.practice.belltask.dto.office.OfficeUpdateDto;
 import com.practice.belltask.model.Office;
+import com.practice.belltask.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -65,6 +67,18 @@ public class OfficeDaoImpl implements OfficeDao {
         tempOffice.setIsActive(office.getIsActive());
         tempOffice.setOrganization(organizationDao.loadById(orgId));
         em.persist(tempOffice);
+    }
+
+    @Transactional
+    @Override
+    public void update(OfficeUpdateDto office) {
+        Office tempOffice = em.find(Office.class, office.getId());
+        tempOffice.setAddress(office.getAddress());
+        tempOffice.setName(office.getName());
+        tempOffice.setAddress(office.getAddress());
+        tempOffice.setPhone(office.getPhone());
+        tempOffice.setIsActive(office.getIsActive());
+        em.merge(tempOffice);
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.practice.belltask.dto.ResponseDto;
 import com.practice.belltask.dto.SuccessResponseDto;
 import com.practice.belltask.dto.office.OfficeSaveDto;
-import com.practice.belltask.dto.organization.OrganizationSaveDto;
+import com.practice.belltask.dto.office.OfficeUpdateDto;
 import com.practice.belltask.service.office.OfficeService;
 import com.practice.belltask.view.office.OfficeIdView;
 import com.practice.belltask.view.office.OfficeListInView;
@@ -63,6 +63,13 @@ public class OfficeController {
         return successResponse();
     }
 
-
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResponseEntity<ResponseDto<SuccessResponseDto>> update(@RequestBody @Valid OfficeUpdateDto dto, BindingResult binding) {
+        if (binding.hasErrors()) {
+            return errorResponse(binding);
+        }
+        service.update(dto);
+        return successResponse();
+    }
 }
 
