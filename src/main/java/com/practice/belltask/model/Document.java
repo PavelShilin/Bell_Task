@@ -37,19 +37,31 @@ public class Document {
      * Тип документа
      */
 
-    @OneToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
     private TypeDocument typeDocument;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
+    @JoinColumn(name = "id")
     private User user;
+
+
 
     /**
      * getters and setters
      */
 
-    public Integer getId() {
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+   public Integer getId() {
         return id;
     }
 

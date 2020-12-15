@@ -58,25 +58,25 @@ public class User {
      */
 
     @Column(name = "is_identified")
-    private boolean statusUser;
+    private Boolean isIdentified;
 
     /**
      * документ сотрудника
      */
 
-    @OneToOne(
+/*    @OneToOne(
             mappedBy = "user",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             optional = false
     )
-    private Document document;
+    private Document document;*/
 
     /**
      * Офис в котором работает сотрудник
      */
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "office_id", referencedColumnName = "id", nullable = false)
     private Office office;
 
@@ -91,7 +91,6 @@ public class User {
     /**
      * getters and setters
      */
-
     public Integer getId() {
         return id;
     }
@@ -106,14 +105,6 @@ public class User {
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
-
-    public Office getOffice() {
-        return office;
-    }
-
-    public void setOffice(Office office) {
-        this.office = office;
     }
 
     public String getFirstName() {
@@ -156,12 +147,28 @@ public class User {
         this.phone = phone;
     }
 
-    public Document getDocument() {
+    public Boolean getIsIdentified() {
+        return isIdentified;
+    }
+
+    public void setIsIdentified(Boolean identified) {
+        isIdentified = identified;
+    }
+
+/*    public Document getDocument() {
         return document;
     }
 
     public void setDocument(Document document) {
         this.document = document;
+    }*/
+
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office office) {
+        this.office = office;
     }
 
     public Citizenship getCitizenship() {
@@ -170,13 +177,5 @@ public class User {
 
     public void setCitizenship(Citizenship citizenship) {
         this.citizenship = citizenship;
-    }
-
-    public boolean isStatusUser() {
-        return statusUser;
-    }
-
-    public void setStatusUser(boolean statusUser) {
-        this.statusUser = statusUser;
     }
 }
