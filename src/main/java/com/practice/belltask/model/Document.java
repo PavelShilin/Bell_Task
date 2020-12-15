@@ -47,11 +47,13 @@ public class Document {
     private User user;
 
 
-
     /**
      * getters and setters
      */
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public User getUser() {
         return user;
@@ -61,7 +63,7 @@ public class Document {
         this.user = user;
     }
 
-   public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
