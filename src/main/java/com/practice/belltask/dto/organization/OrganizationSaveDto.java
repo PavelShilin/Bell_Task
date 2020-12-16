@@ -2,13 +2,14 @@ package com.practice.belltask.dto.organization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 
 @ApiModel
-public class OrganizationSaveDto  {
+public class OrganizationSaveDto {
 
     @NotBlank(message = "Name is empty")
     @JsonProperty(required = true)

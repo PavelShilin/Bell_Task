@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import static com.practice.belltask.util.ResponseUtil.errorResponse;
 
-@RestControllerAdvice
+@RestControllerAdvice("com.practice.belltask")
 public class ControllersAdvice {
     @ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<ResponseDto<Object>> handleNotFound(NotFoundException e) {
