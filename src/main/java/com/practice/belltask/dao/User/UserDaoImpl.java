@@ -54,11 +54,11 @@ public class UserDaoImpl implements UserDao {
         Citizenship citizenship = user.getCitizenship();
         Document document = em.find(Document.class, id);
         UserIdView userView = mapperFacade.map(user, UserIdView.class);
-        userView.setDocName(document.getTypeDocument().getNameTypeDocument());
+        userView.setDocName(document.getTypeDocument().getName());
         userView.setDocNumber(document.getDocNumber());
         userView.setDocDate(document.getDocDate());
-        userView.setCitizenshipCode(citizenship.getCodeCitizenship());
-        userView.setCitizenshipName(citizenship.getNameCitizenship());
+        userView.setCitizenshipCode(citizenship.getCode());
+        userView.setCitizenshipName(citizenship.getName());
         return userView;
     }
 
@@ -84,11 +84,11 @@ public class UserDaoImpl implements UserDao {
             predicates.add(cb.equal(userRoot.get("position"), userList.position));
         }
         if (userList.citizenshipCode != null) {
-            predicates.add(cb.equal(userRoot.get("citizenship").get("codeCitizenship"), userList.citizenshipCode));
+            predicates.add(cb.equal(userRoot.get("citizenship").get("code"), userList.citizenshipCode));
         }
         if (userList.docCode != null) {
             predicates.add(cb.equal(documentRoot.get("id"), userRoot.get("id")));
-            predicates.add(cb.equal(documentRoot.get("typeDocument").get("codeTypeDocument"), userList.docCode));
+            predicates.add(cb.equal(documentRoot.get("typeDocument").get("code"), userList.docCode));
         }
         criteriaQuery.where(cb.and(predicates.toArray(new Predicate[]{}))).distinct(true);
         TypedQuery<User> query = em.createQuery(criteriaQuery);

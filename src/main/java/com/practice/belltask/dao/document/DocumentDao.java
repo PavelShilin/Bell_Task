@@ -11,9 +11,7 @@ import java.util.Date;
 public interface DocumentDao {
     Document getById(Integer id);
 
-
     void createDocument(Integer id, String number, Date date, String name, Integer code);
-
 
     TypeDocument getTypeDocumentByName(String name);
 

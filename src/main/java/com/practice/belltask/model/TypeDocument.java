@@ -23,14 +23,14 @@ public class TypeDocument {
      */
 
     @Column(name = "code", unique = true)
-    private Integer codeTypeDocument;
+    private Integer code;
 
     /**
      * Общее название документа (Псспорт РФ, военный билет, и т. д.)
      */
 
     @Column(name = "name", nullable = false, length = 60)
-    private String nameTypeDocument;
+    private String name;
 
     /**
      * getters and setters
@@ -48,19 +48,19 @@ public class TypeDocument {
         this.version = version;
     }
 
-    public Integer getCodeTypeDocument() {
-        return codeTypeDocument;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setCodeTypeDocument(Integer codeTypeDocument) {
-        this.codeTypeDocument = codeTypeDocument;
+    public void setCode(Integer codeTypeDocument) {
+        this.code = codeTypeDocument;
     }
 
-    public String getNameTypeDocument() {
-        return nameTypeDocument;
+    public String getName() {
+        return name;
     }
 
     public void setNameTypeDocument(String nameTypeDocument) {
-        this.nameTypeDocument = nameTypeDocument;
+        this.name = name;
     }
 }

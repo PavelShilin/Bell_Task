@@ -59,7 +59,7 @@ public class DocumentDaoImpl implements DocumentDao {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<TypeDocument> criteria = builder.createQuery(TypeDocument.class);
         Root<TypeDocument> person = criteria.from(TypeDocument.class);
-        criteria.where(builder.equal(person.get("nameTypeDocument"), name));
+        criteria.where(builder.equal(person.get("name"), name));
         TypedQuery<TypeDocument> query = em.createQuery(criteria);
         return query.getSingleResult();
     }
@@ -67,8 +67,8 @@ public class DocumentDaoImpl implements DocumentDao {
     public TypeDocument getTypeDocumentByCode(Integer code) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<TypeDocument> criteria = builder.createQuery(TypeDocument.class);
-        Root<TypeDocument> person = criteria.from(TypeDocument.class);
-        criteria.where(builder.equal(person.get("codeTypeDocument"), code));
+        Root<TypeDocument> doc = criteria.from(TypeDocument.class);
+        criteria.where(builder.equal(doc.get("code"), code));
         TypedQuery<TypeDocument> query = em.createQuery(criteria);
         return query.getSingleResult();
     }
@@ -102,10 +102,10 @@ public class DocumentDaoImpl implements DocumentDao {
     public Integer getTypeCodeByName(String name) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<TypeDocument> criteria = builder.createQuery(TypeDocument.class);
-        Root<TypeDocument> person = criteria.from(TypeDocument.class);
-        criteria.where(builder.equal(person.get("nameTypeDocument"), name));
+        Root<TypeDocument> doc = criteria.from(TypeDocument.class);
+        criteria.where(builder.equal(doc.get("name"), name));
         TypedQuery<TypeDocument> query = em.createQuery(criteria);
-        return query.getSingleResult().getCodeTypeDocument();
+        return query.getSingleResult().getCode();
     }
 
 }

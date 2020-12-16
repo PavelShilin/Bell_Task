@@ -25,7 +25,7 @@ public class CitizenshipDaoImpl implements CitizenshipDao {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Citizenship> criteria = builder.createQuery(Citizenship.class);
         Root<Citizenship> person = criteria.from(Citizenship.class);
-        criteria.where(builder.equal(person.get("codeCitizenship"), code));
+        criteria.where(builder.equal(person.get("code"), code));
         TypedQuery<Citizenship> query = em.createQuery(criteria);
         return query.getSingleResult();
     }

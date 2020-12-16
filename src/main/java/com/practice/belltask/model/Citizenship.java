@@ -23,13 +23,13 @@ public class Citizenship {
      */
 
     @Column(name = "code", unique = true)
-    private Integer codeCitizenship;
+    private Integer code;
     /**
      * Название Государства
      */
 
     @Column(name = "name", nullable = false, length = 60)
-    private String nameCitizenship;
+    private String name;
 
     /**
      * getters and setters
@@ -48,19 +48,19 @@ public class Citizenship {
         this.version = version;
     }
 
-    public Integer getCodeCitizenship() {
-        return codeCitizenship;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setCodeCitizenship(Integer codeCitizenship) {
-        this.codeCitizenship = codeCitizenship;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
-    public String getNameCitizenship() {
-        return nameCitizenship;
+    public String getName() {
+        return name;
     }
 
-    public void setNameCitizenship(String nameCitizenship) {
-        this.nameCitizenship = nameCitizenship;
+    public void setName(String name) {
+        this.name = name;
     }
 }
