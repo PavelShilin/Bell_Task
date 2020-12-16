@@ -151,8 +151,7 @@ public class User {
         return isIdentified;
     }
 
-    public void setIsIdentified(Boolean identified) {
-        isIdentified = identified;
+    public void setIsIdentified(Boolean identified) { isIdentified = identified;
     }
 
 /*    public Document getDocument() {

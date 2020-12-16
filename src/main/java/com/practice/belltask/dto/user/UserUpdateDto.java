@@ -7,10 +7,13 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @ApiModel
-public class UserCreateDto {
+public class UserUpdateDto {
 
     @NotNull
+    public Integer id;
+
     public Integer officeId;
+
     @NotBlank
     public String firstName;
 
@@ -34,6 +37,14 @@ public class UserCreateDto {
     public Integer citizenshipCode;
 
     public Boolean isIdentified;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getOfficeId() {
         return officeId;

@@ -17,5 +17,6 @@ public interface DocumentDao {
 
     TypeDocument getTypeDocumentByName(String name);
 
+    void updateDocument(Integer id, String number, Date date, String name);
 }
 

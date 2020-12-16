@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.practice.belltask.dto.ResponseDto;
 import com.practice.belltask.dto.SuccessResponseDto;
 import com.practice.belltask.dto.user.UserCreateDto;
+import com.practice.belltask.dto.user.UserUpdateDto;
 import com.practice.belltask.service.user.UserService;
 import com.practice.belltask.view.user.UserIdView;
 import com.practice.belltask.view.user.UserListInView;
@@ -34,7 +35,6 @@ public class UserController {
     @Autowired
     public UserController(UserService service) {
         this.service = service;
-
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -58,6 +58,15 @@ public class UserController {
             return errorResponse(binding);
         }
         service.save(dto);
+        return successResponse();
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResponseEntity<ResponseDto<SuccessResponseDto>> update(@RequestBody @Valid UserUpdateDto dto, BindingResult binding) {
+        if (binding.hasErrors()) {
+            return errorResponse(binding);
+        }
+        service.update(dto);
         return successResponse();
     }
 

@@ -1,6 +1,7 @@
 package com.practice.belltask.service.user;
 
 import com.practice.belltask.dto.user.UserCreateDto;
+import com.practice.belltask.dto.user.UserUpdateDto;
 import com.practice.belltask.model.Document;
 import com.practice.belltask.model.User;
 import com.practice.belltask.view.user.UserIdView;
@@ -19,4 +20,5 @@ public interface UserService {
 
     void save(UserCreateDto dto);
 
+    void update(UserUpdateDto dto);
 }

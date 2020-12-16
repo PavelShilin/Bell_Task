@@ -1,9 +1,11 @@
 package com.practice.belltask.dao.User;
 
+import com.practice.belltask.controller.advice.NotFoundException;
 import com.practice.belltask.dao.citizenship.CitizenshipDao;
 import com.practice.belltask.dao.document.DocumentDao;
 import com.practice.belltask.dao.office.OfficeDao;
 import com.practice.belltask.dto.user.UserCreateDto;
+import com.practice.belltask.dto.user.UserUpdateDto;
 import com.practice.belltask.model.*;
 import com.practice.belltask.model.mapper.MapperFacade;
 import com.practice.belltask.view.user.UserIdView;
@@ -13,10 +15,7 @@ import com.practice.belltask.view.user.UserListOutView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.Transient;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -104,6 +103,7 @@ public class UserDaoImpl implements UserDao {
         tempUser.setMiddleName(userDto.getMiddleName());
         tempUser.setOffice(officeDao.loadOfficeById(userDto.officeId));
         tempUser.setPosition(userDto.position);
+        tempUser.setIsIdentified(userDto.getIsIdentified());
         if (userDto.citizenshipCode != null) {
             tempUser.setCitizenship(citizenshipDao.getCitizenshipByCode(userDto.citizenshipCode));
         }
@@ -112,7 +112,39 @@ public class UserDaoImpl implements UserDao {
         if ((userDto.docCode != null || (userDto.docName != null)) &&
                 ((userDto.docNumber != null) || (userDto.docDate != null))) {
             documentDao.createDocument(tempUser.getId(), userDto.docNumber, userDto.docDate, userDto.docName, userDto.docCode);
-            System.out.println("=====================================test===============================");
         }
     }
+
+    @Override
+    public void update(UserUpdateDto userUpdateDto) {
+        if (userUpdateDto.id == null) {
+            throw new NotFoundException("id not found");
+        }
+        User tempUser = em.find(User.class, userUpdateDto.id);
+        if (userUpdateDto.getOfficeId() != null) {
+            tempUser.setOffice(officeDao.loadOfficeById(userUpdateDto.officeId));
+        }
+        tempUser.setFirstName(userUpdateDto.getFirstName());
+        if (userUpdateDto.getSecondName() != null) {
+            tempUser.setSecondName(userUpdateDto.getSecondName());
+        }
+        if (userUpdateDto.getMiddleName() != null) {
+            tempUser.setMiddleName(userUpdateDto.getMiddleName());
+        }
+        if (userUpdateDto.getPosition() != null) {
+            tempUser.setPosition(userUpdateDto.getPosition());
+        } else throw new NotFoundException("Position not found ");
+
+        if (userUpdateDto.getPhone() != null) {
+            tempUser.setPhone(userUpdateDto.getPhone());
+        }
+        if (userUpdateDto.getCitizenshipCode() != null) {
+            tempUser.setCitizenship(citizenshipDao.getCitizenshipByCode(userUpdateDto.getCitizenshipCode()));
+        }
+        em.persist(tempUser);
+
+        documentDao.updateDocument(userUpdateDto.id, userUpdateDto.docNumber, userUpdateDto.docDate, userUpdateDto.docName);
+
+    }
+
 }

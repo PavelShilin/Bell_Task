@@ -1,6 +1,7 @@
 package com.practice.belltask.dao.User;
 
 import com.practice.belltask.dto.user.UserCreateDto;
+import com.practice.belltask.dto.user.UserUpdateDto;
 import com.practice.belltask.model.Document;
 import com.practice.belltask.model.User;
 import com.practice.belltask.view.user.UserIdView;
@@ -14,8 +15,10 @@ public interface UserDao {
 
     UserIdView getUserId(Integer id);
 
-    List<UserListOutView> getListUser (UserListInView userList);
+    List<UserListOutView> getListUser(UserListInView userList);
 
     void save(UserCreateDto userDto);
+
+    void update(UserUpdateDto userUpdateDto);
 
 }

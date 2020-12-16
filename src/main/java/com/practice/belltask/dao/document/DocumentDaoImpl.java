@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class DocumentDaoImpl implements DocumentDao {
@@ -69,6 +71,41 @@ public class DocumentDaoImpl implements DocumentDao {
         criteria.where(builder.equal(person.get("codeTypeDocument"), code));
         TypedQuery<TypeDocument> query = em.createQuery(criteria);
         return query.getSingleResult();
+    }
+
+    @Override
+    public void updateDocument(Integer id, String number, Date date, String name) {
+        if (contains(id)) {
+            Document tempDocument = em.find(Document.class, id);
+            if (number != null) {
+                tempDocument.setDocNumber(number);
+            }
+            if (date != null) {
+                tempDocument.setDocDate(date);
+            }
+            if (name != null) {
+                tempDocument.setTypeDocument(getTypeDocumentByName(name));
+            }
+            em.persist(tempDocument);
+        } else
+            createDocument(id, number, date, name, getTypeCodeByName(name));
+    }
+
+
+    public Boolean contains(Integer id) {
+        Query query = em.createQuery("Select d FROM Document d WHERE d.id = :id");
+        query.setParameter("id", id);
+        List<?> list = query.getResultList();
+        return !list.isEmpty();
+    }
+
+    public Integer getTypeCodeByName(String name) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<TypeDocument> criteria = builder.createQuery(TypeDocument.class);
+        Root<TypeDocument> person = criteria.from(TypeDocument.class);
+        criteria.where(builder.equal(person.get("nameTypeDocument"), name));
+        TypedQuery<TypeDocument> query = em.createQuery(criteria);
+        return query.getSingleResult().getCodeTypeDocument();
     }
 
 }

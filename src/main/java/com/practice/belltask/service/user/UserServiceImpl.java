@@ -2,6 +2,7 @@ package com.practice.belltask.service.user;
 
 import com.practice.belltask.dao.User.UserDao;
 import com.practice.belltask.dto.user.UserCreateDto;
+import com.practice.belltask.dto.user.UserUpdateDto;
 import com.practice.belltask.model.Document;
 import com.practice.belltask.model.mapper.MapperFacade;
 import com.practice.belltask.view.user.UserIdView;
@@ -22,7 +23,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public UserServiceImpl(UserDao dao, MapperFacade mapperFacade) {
         this.dao = dao;
-
         this.mapperFacade = mapperFacade;
     }
 
@@ -33,13 +33,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserListOutView> filter(UserListInView filter) {
-       return dao.getListUser(filter);
+        return dao.getListUser(filter);
     }
 
     @Transactional
     @Override
     public void save(UserCreateDto dto) {
         dao.save(dto);
+    }
+
+    @Transactional
+    @Override
+    public void update(UserUpdateDto dto) {
+        dao.update(dto);
     }
 }
 
