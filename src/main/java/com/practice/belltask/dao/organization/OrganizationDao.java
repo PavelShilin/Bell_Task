@@ -37,7 +37,7 @@ public interface OrganizationDao {
 
     public List<Organization> buildCriteria(String name, Long inn, Boolean is_status);
 
-    void update (OrganizationUpdateDto organization);
+    void update (Organization organization);
 
 
 

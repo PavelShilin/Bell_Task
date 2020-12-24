@@ -29,8 +29,9 @@ public class TypeDocument {
      * Общее название документа (Псспорт РФ, военный билет, и т. д.)
      */
 
-    @Column(name = "name", nullable = false, length = 60)
+    @Column(name = "name", length = 60)
     private String name;
+
 
     /**
      * getters and setters
@@ -60,7 +61,7 @@ public class TypeDocument {
         return name;
     }
 
-    public void setNameTypeDocument(String nameTypeDocument) {
+    public void setName(String name) {
         this.name = name;
     }
 }

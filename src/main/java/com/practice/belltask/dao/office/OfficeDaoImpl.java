@@ -4,10 +4,12 @@ import com.practice.belltask.dao.organization.OrganizationDao;
 import com.practice.belltask.dto.office.OfficeUpdateDto;
 import com.practice.belltask.model.Office;
 import com.practice.belltask.model.Organization;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -24,10 +26,12 @@ public class OfficeDaoImpl implements OfficeDao {
     private final EntityManager em;
     private final OrganizationDao organizationDao;
 
+
     @Autowired
     public OfficeDaoImpl(EntityManager em, OrganizationDao organizationDao) {
         this.em = em;
         this.organizationDao = organizationDao;
+
     }
 
     @Override
@@ -60,25 +64,24 @@ public class OfficeDaoImpl implements OfficeDao {
 
 
     @Override
-    public void save(Office office, Integer orgId) {
-        Office tempOffice = new Office();
-        tempOffice.setName(office.getName());
-        tempOffice.setAddress(office.getAddress());
-        tempOffice.setIsActive(office.getIsActive());
-        tempOffice.setOrganization(organizationDao.loadById(orgId));
-        em.persist(tempOffice);
+    public void save(Office office) {
+        Organization o = em.getReference(Organization.class, office.getOrganization().getId());
+        office.setOrganization(o);
+        em.persist(office);
     }
 
-    @Transactional
     @Override
-    public void update(OfficeUpdateDto office) {
-        Office tempOffice = em.find(Office.class, office.getId());
-        tempOffice.setAddress(office.getAddress());
-        tempOffice.setName(office.getName());
-        tempOffice.setAddress(office.getAddress());
-        tempOffice.setPhone(office.getPhone());
-        tempOffice.setIsActive(office.getIsActive());
-        em.merge(tempOffice);
+    public void update(Office office) {
+        Office updateOffice = em.find(Office.class, office.getId());
+        if (updateOffice == null) {
+            throw new EntityNotFoundException("Office ID not found");
+        } else {
+            updateOffice.setId(office.getId());
+            updateOffice.setName(office.getName());
+            updateOffice.setAddress(office.getAddress());
+            updateOffice.setPhone(office.getPhone());
+            updateOffice.setIsActive(office.getIsActive());
+        }
     }
 
     @Override

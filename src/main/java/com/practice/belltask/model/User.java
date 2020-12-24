@@ -64,27 +64,28 @@ public class User {
      * документ сотрудника
      */
 
-/*    @OneToOne(
+    @OneToOne(
             mappedBy = "user",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            optional = false
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+            // optional = false
+
     )
-    private Document document;*/
+    private Document document;
 
     /**
      * Офис в котором работает сотрудник
      */
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "office_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "office_id", referencedColumnName = "id")
     private Office office;
 
     /**
      * Гражданство
      */
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "citizenship_code", referencedColumnName = "id")
     private Citizenship citizenship;
 
@@ -151,16 +152,17 @@ public class User {
         return isIdentified;
     }
 
-    public void setIsIdentified(Boolean identified) { isIdentified = identified;
+    public void setIsIdentified(Boolean identified) {
+        isIdentified = identified;
     }
 
-/*    public Document getDocument() {
+    public Document getDocument() {
         return document;
     }
 
     public void setDocument(Document document) {
         this.document = document;
-    }*/
+    }
 
     public Office getOffice() {
         return office;

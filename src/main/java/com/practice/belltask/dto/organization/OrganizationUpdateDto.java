@@ -83,7 +83,6 @@ public class OrganizationUpdateDto {
         this.kpp = kpp;
     }
 
-
     public String getAddress() {
         return address;
     }

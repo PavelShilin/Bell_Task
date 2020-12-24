@@ -11,14 +11,14 @@ import com.practice.belltask.view.user.UserListOutView;
 import java.util.List;
 
 public interface UserDao {
+
     User get(Integer id);
 
-    UserIdView getUserId(Integer id);
+    List<User> getListUser(Integer officeId, String firstName, String secondName, String middleName,
+                           String position, Integer citizenshipCode, Integer docCode);
 
-    List<UserListOutView> getListUser(UserListInView userList);
+    void save(User user);
 
-    void save(UserCreateDto userDto);
-
-    void update(UserUpdateDto userUpdateDto);
+    void update(User user);
 
 }

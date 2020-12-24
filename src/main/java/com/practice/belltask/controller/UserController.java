@@ -11,6 +11,9 @@ import com.practice.belltask.view.user.UserIdView;
 import com.practice.belltask.view.user.UserListInView;
 import com.practice.belltask.view.user.UserListOutView;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,37 +40,40 @@ public class UserController {
         this.service = service;
     }
 
+    public UserIdView get(@PathVariable int id) {
+        return service.getUser(id);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ResponseDto<UserIdView>> get(@PathVariable int id) {
-        UserIdView user = service.getUser(id);
-        if (user == null) return errorResponse("User not found", HttpStatus.NOT_FOUND);
-        return dataResponse(user);
+    public UserIdView user(@PathVariable(name = "id") Integer id) {
+        return service.getUser(id);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    public ResponseEntity<ResponseDto<List<UserListOutView>>> list(@RequestBody @Valid UserListInView filter, BindingResult binding) {
-        if (binding.hasErrors()) {
-            return errorResponse(binding);
-        }
-        return dataResponse(service.filter(filter));
+    public List<UserListOutView> list(@RequestBody @Valid UserListInView filter) {
+        return service.filter(filter);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResponseEntity<ResponseDto<SuccessResponseDto>> save(@RequestBody @Valid UserCreateDto dto, BindingResult binding) {
-        if (binding.hasErrors()) {
-            return errorResponse(binding);
-        }
-        service.save(dto);
-        return successResponse();
+    @ApiOperation(value = "Добавить нового работника", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @PostMapping("/save")
+    public void saveUser(@Valid
+                         @RequestBody UserCreateDto user) {
+        service.save(user);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResponseEntity<ResponseDto<SuccessResponseDto>> update(@RequestBody @Valid UserUpdateDto dto, BindingResult binding) {
-        if (binding.hasErrors()) {
-            return errorResponse(binding);
-        }
-        service.update(dto);
-        return successResponse();
+    @ApiOperation(value = "Обновить юзера", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @PostMapping("/update")
+    public void updateOffice(@Valid
+                             @RequestBody UserUpdateDto user) {
+        service.update(user);
     }
 
 

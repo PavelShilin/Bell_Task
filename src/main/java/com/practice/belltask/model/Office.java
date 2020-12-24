@@ -2,7 +2,9 @@ package com.practice.belltask.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "Office")
 public class Office {
@@ -52,9 +54,13 @@ public class Office {
      * Организация
      */
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "org_id", referencedColumnName = "id",nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "org_id", referencedColumnName = "id")
     private Organization organization;
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "office")
+    private Set<User> users;
 
     public Office() {
     }
@@ -68,6 +74,18 @@ public class Office {
         this.address = address;
         this.isActive = isActive;
         this.organization = organization;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Integer getId() {
@@ -126,22 +144,4 @@ public class Office {
         this.organization = organization;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Office)) return false;
-        Office office = (Office) o;
-        return Objects.equals(id, office.id) &&
-                Objects.equals(version, office.version) &&
-                Objects.equals(name, office.name) &&
-                Objects.equals(phone, office.phone) &&
-                Objects.equals(address, office.address) &&
-                Objects.equals(isActive, office.isActive) &&
-                Objects.equals(organization, office.organization);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, version, name, phone, address, isActive, organization);
-    }
 }

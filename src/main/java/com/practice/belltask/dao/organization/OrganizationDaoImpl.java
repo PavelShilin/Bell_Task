@@ -84,7 +84,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
     @Transactional
     @Override
-    public void update(OrganizationUpdateDto organization) {
+    public void update(Organization organization) {
         Organization org = em.find(Organization.class, organization.getId());
         org.setAddress(organization.getAddress());
         org.setName(organization.getName());
@@ -93,8 +93,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
         org.setInn(organization.getInn());
         org.setKpp(organization.getKpp());
         org.setPhone(organization.getPhone());
-        org.setStatus(organization.getStatus());
-        em.merge(org);
+        org.setStatus(organization.getIsActive());
     }
 
     private CriteriaQuery<Organization> buildCriteriaByName(String name) {

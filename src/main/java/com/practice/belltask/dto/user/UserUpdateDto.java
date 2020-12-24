@@ -141,4 +141,23 @@ public class UserUpdateDto {
     public void setIsIdentified(Boolean identified) {
         isIdentified = identified;
     }
+
+    @Override
+    public String toString() {
+        return "UserUpdateDto{" +
+                "id=" + id +
+                ", officeId=" + officeId +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", position='" + position + '\'' +
+                ", phone='" + phone + '\'' +
+                ", docCode=" + docCode +
+                ", docName='" + docName + '\'' +
+                ", docNumber='" + docNumber + '\'' +
+                ", docDate=" + docDate +
+                ", citizenshipCode=" + citizenshipCode +
+                ", isIdentified=" + isIdentified +
+                '}';
+    }
 }

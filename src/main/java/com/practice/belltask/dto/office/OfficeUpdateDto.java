@@ -11,21 +11,21 @@ public class OfficeUpdateDto {
 
     @NotNull
     @JsonProperty
-    private Integer id;
+    public Integer id;
 
     @NotBlank
     @JsonProperty
-    private String name;
+    public String name;
 
     @NotBlank
     @JsonProperty
-    private String address;
+    public String address;
 
     @JsonProperty
-    private String phone;
+    public String phone;
 
     @JsonProperty
-    private boolean isActive = true;
+    public boolean isActive = true;
 
     public Integer getId() {
         return id;

@@ -37,7 +37,7 @@ public class Document {
      * Тип документа
      */
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private TypeDocument typeDocument;
 

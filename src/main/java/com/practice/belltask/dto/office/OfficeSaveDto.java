@@ -10,19 +10,19 @@ import javax.validation.constraints.NotBlank;
 public class OfficeSaveDto {
 
     @JsonProperty
-    private String name;
+    public String name;
 
     @JsonProperty
-    private String address;
+    public String address;
 
     @JsonProperty
-    private String phone;
+    public String phone;
 
     @JsonProperty
-    private boolean isActive = true;
+    public boolean isActive = true;
 
     @NotBlank
-    private Integer orgId;
+    public Integer orgId;
 
     public Integer getOrgId() {
         return orgId;

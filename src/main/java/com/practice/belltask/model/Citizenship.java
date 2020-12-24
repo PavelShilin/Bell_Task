@@ -1,6 +1,10 @@
 package com.practice.belltask.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Citizenship")
@@ -28,12 +32,19 @@ public class Citizenship {
      * Название Государства
      */
 
-    @Column(name = "name", nullable = false, length = 60)
+    @Column(name = "name", length = 60)
     private String name;
+
+    @OneToMany(mappedBy = "citizenship")
+    Set<User> users = new HashSet<>();
 
     /**
      * getters and setters
      */
+
+    public void userAdd(User user) {
+        users.add(user);
+    }
 
     public Integer getId() {
         return id;

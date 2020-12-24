@@ -4,4 +4,7 @@ import com.practice.belltask.model.Citizenship;
 
 public interface CitizenshipDao {
     Citizenship getCitizenshipByCode(Integer id);
+
+    public Boolean contains(Integer code) ;
+
 }

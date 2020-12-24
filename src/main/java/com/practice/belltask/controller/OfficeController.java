@@ -45,6 +45,7 @@ public class OfficeController {
             return errorResponse(binding);
         }
         return dataResponse(service.filter(filter));
+
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -52,6 +53,7 @@ public class OfficeController {
         OfficeIdView office = service.getOfficeById(id);
         if (office == null) return errorResponse("office not found", HttpStatus.BAD_GATEWAY);
         return dataResponse(office);
+
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

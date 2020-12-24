@@ -10,6 +10,7 @@ import com.practice.belltask.model.mapper.MapperFacade;
 import com.practice.belltask.view.office.OfficeIdView;
 import com.practice.belltask.view.office.OfficeListInView;
 import com.practice.belltask.view.office.OfficeListOutView;
+
 import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,13 @@ public class OfficeServiceImpl implements OfficeService {
 
     private final OfficeDao officeDao;
     private final MapperFacade mapperFacade;
-
+    private final MapperFactory mapperFactory;
 
     @Autowired
-    public OfficeServiceImpl(OfficeDao dao, OrganizationDao organizationdao, OrganizationDao organizationDao, MapperFacade mapperFacade, MapperFactory mapperFactory) {
+    public OfficeServiceImpl(OfficeDao dao, OrganizationDao organizationdao, OrganizationDao organizationDao, MapperFacade mapperFacade, MapperFactory mapperFactory, MapperFactory mapperFactory1) {
         this.officeDao = dao;
         this.mapperFacade = mapperFacade;
+        this.mapperFactory = mapperFactory1;
     }
 
     @Override
@@ -37,7 +39,9 @@ public class OfficeServiceImpl implements OfficeService {
             throw new NotFoundException("Organization with id: " + filter.orgId + " not found");
         }
         List<Office> all = officeDao.filter(filter.orgId, filter.name, filter.phone, filter.isActive);
+
         return mapperFacade.mapAsList(all, OfficeListOutView.class);
+
     }
 
     @Override
@@ -46,17 +50,18 @@ public class OfficeServiceImpl implements OfficeService {
         return (mapperFacade.map(officeDao.loadOfficeById(id), OfficeIdView.class));
     }
 
-    @Override
     @Transactional
-    public void save(OfficeSaveDto office) {
-        checkOrganization(office.getOrgId());
-        officeDao.save(mapperFacade.map(office, Office.class), office.getOrgId());
+    @Override
+    public void save(OfficeSaveDto dto) {
+        checkOrganization(dto.getOrgId());
+        officeDao.save(mapperFacade.map(dto, Office.class));
     }
 
+    @Transactional
     @Override
-    public void update(OfficeUpdateDto office) {
-        checkOrganization(office.getId());
-        officeDao.update(office);
+    public void update(OfficeUpdateDto officeDto) {
+        checkOrganization(officeDto.getId());
+        officeDao.update(mapperFacade.map(officeDto, Office.class));
     }
 
     public void checkOrganization(Integer orgId) {

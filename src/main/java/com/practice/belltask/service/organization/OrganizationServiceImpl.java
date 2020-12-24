@@ -44,6 +44,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public void update(OrganizationUpdateDto dto) {
-        dao.update(dto);
+        dao.update(mapperFacade.map(dto, Organization.class));
     }
 }

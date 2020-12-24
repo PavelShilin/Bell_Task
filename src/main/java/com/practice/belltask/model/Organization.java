@@ -89,20 +89,20 @@ public class Organization {
      * getters and setters
      */
 
-    public void addOffices(Office office) {
+/*    public void addOffices(Office office) {
         offices.add(office);
-        office.setOrganization(this);
     }
 
     public void removeOffices(Office office) {
         offices.remove(office);
-        office.setOrganization(null);
-    }
-
+    }*/
     public Integer getId() {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getVersion() {
         return version;

@@ -30,121 +30,136 @@ public class UserDaoImpl implements UserDao {
 
     private final EntityManager em;
     private final MapperFacade mapperFacade;
-    private final OfficeDao officeDao;
-    private final DocumentDao documentDao;
-    private final CitizenshipDao citizenshipDao;
+
 
     @Autowired
     public UserDaoImpl(EntityManager em, MapperFacade mapperFacade, OfficeDao officeDao, DocumentDao documentDao, CitizenshipDao citizenshipDao) {
         this.em = em;
         this.mapperFacade = mapperFacade;
-        this.officeDao = officeDao;
-        this.documentDao = documentDao;
-        this.citizenshipDao = citizenshipDao;
+
     }
 
     @Override
     public User get(Integer id) {
-        return em.find(User.class, id, LockModeType.NONE);
+
+        User usr = em.find(User.class, id);
+        if (usr == null) {
+            throw new RuntimeException("User with id " + id + " not found");
+        }
+        return usr;
     }
 
-    @Override
-    public UserIdView getUserId(Integer id) {
-        User user = em.find(User.class, id);
-        Citizenship citizenship = user.getCitizenship();
-        Document document = em.find(Document.class, id);
-        UserIdView userView = mapperFacade.map(user, UserIdView.class);
-        userView.setDocName(document.getTypeDocument().getName());
-        userView.setDocNumber(document.getDocNumber());
-        userView.setDocDate(document.getDocDate());
-        userView.setCitizenshipCode(citizenship.getCode());
-        userView.setCitizenshipName(citizenship.getName());
-        return userView;
-    }
 
     @Override
-    public List<UserListOutView> getListUser(UserListInView userList) {
+    public List<User> getListUser(Integer officeId, String firstName, String secondName,
+                                  String middleName, String position, Integer citizenshipCode, Integer docCode) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
         Root<User> userRoot = criteriaQuery.from(User.class);
         Root<Document> documentRoot = criteriaQuery.from(Document.class);
         criteriaQuery.select(userRoot);
         List<Predicate> predicates = new ArrayList<>();
-        predicates.add(cb.equal(userRoot.get("office").get("id"), userList.getOfficeId()));
-        if (userList.firstName != null) {
-            predicates.add(cb.equal(userRoot.get("firstName"), userList.firstName));
+        predicates.add(cb.equal(userRoot.get("office").get("id"), officeId));
+        if (firstName != null) {
+            predicates.add(cb.equal(userRoot.get("firstName"), firstName));
         }
-        if (userList.secondName != null) {
-            predicates.add(cb.equal(userRoot.get("secondName"), userList.secondName));
+        if (secondName != null) {
+            predicates.add(cb.equal(userRoot.get("secondName"), secondName));
         }
-        if (userList.middleName != null) {
-            predicates.add(cb.equal(userRoot.get("middleName"), userList.middleName));
+        if (middleName != null) {
+            predicates.add(cb.equal(userRoot.get("middleName"), middleName));
         }
-        if (userList.position != null) {
-            predicates.add(cb.equal(userRoot.get("position"), userList.position));
+        if (position != null) {
+            predicates.add(cb.equal(userRoot.get("position"), position));
         }
-        if (userList.citizenshipCode != null) {
-            predicates.add(cb.equal(userRoot.get("citizenship").get("code"), userList.citizenshipCode));
+        if (citizenshipCode != null) {
+            predicates.add(cb.equal(userRoot.get("citizenship").get("code"), citizenshipCode));
         }
-        if (userList.docCode != null) {
+        if (docCode != null) {
             predicates.add(cb.equal(documentRoot.get("id"), userRoot.get("id")));
-            predicates.add(cb.equal(documentRoot.get("typeDocument").get("code"), userList.docCode));
+            predicates.add(cb.equal(documentRoot.get("typeDocument").get("code"), docCode));
         }
         criteriaQuery.where(cb.and(predicates.toArray(new Predicate[]{}))).distinct(true);
         TypedQuery<User> query = em.createQuery(criteriaQuery);
-        return mapperFacade.mapAsList(query.getResultList(), UserListOutView.class);
+        return query.getResultList();
+
     }
 
     @Override
-    public void save(UserCreateDto userDto) {
-        User tempUser = new User();
-        tempUser.setFirstName(userDto.getFirstName());
-        tempUser.setSecondName(userDto.getSecondName());
-        tempUser.setMiddleName(userDto.getMiddleName());
-        tempUser.setOffice(officeDao.loadOfficeById(userDto.officeId));
-        tempUser.setPosition(userDto.position);
-        tempUser.setIsIdentified(userDto.getIsIdentified());
-        if (userDto.citizenshipCode != null) {
-            tempUser.setCitizenship(citizenshipDao.getCitizenshipByCode(userDto.citizenshipCode));
+    public void save(User user) {
+        if (user.getDocument().getTypeDocument().getCode() != null) {
+            TypedQuery<TypeDocument> query2 = em.createQuery("SELECT d FROM TypeDocument d WHERE d.code = ?1", TypeDocument.class);
+            query2.setParameter(1, user.getDocument().getTypeDocument().getCode());
+            TypeDocument docT;
+            try {
+                docT = query2.getSingleResult();
+                user.getDocument().setTypeDocument(docT);
+            } catch (NoResultException e) {
+                throw new RuntimeException("Code document not found", e);
+            }
         }
-        em.persist(tempUser);
-        //   documentDao.createDocument(tempUser, userDto.docNumber, userDto.docDate, userDto.docName, userDto.docCode);
-        if ((userDto.docCode != null || (userDto.docName != null)) &&
-                ((userDto.docNumber != null) || (userDto.docDate != null))) {
-            documentDao.createDocument(tempUser.getId(), userDto.docNumber, userDto.docDate, userDto.docName, userDto.docCode);
+        if (user.getCitizenship() != null) {
+            TypedQuery<Citizenship> query = em.createQuery("SELECT n FROM Citizenship n WHERE n.code = ?1", Citizenship.class);
+            query.setParameter(1, user.getCitizenship().getCode());
+            try {
+                user.setCitizenship(query.getSingleResult());
+            } catch (NoResultException e) {
+                throw new RuntimeException("Citizenship code not found", e);
+            }
         }
+
+        Office office = em.find(Office.class, user.getOffice().getId());
+        if (office == null) {
+            throw new RuntimeException("office id not found");
+        }
+        user.setOffice(office);
+        Document doc = user.getDocument();
+        user.setDocument(null);
+        em.persist(user);
+        user.setDocument(doc);
+        doc.setUser(user);
+        em.persist(user.getDocument());
     }
 
     @Override
-    public void update(UserUpdateDto userUpdateDto) {
-        if (userUpdateDto.id == null) {
-            throw new NotFoundException("id not found");
-        }
-        User tempUser = em.find(User.class, userUpdateDto.id);
-        if (userUpdateDto.getOfficeId() != null) {
-            tempUser.setOffice(officeDao.loadOfficeById(userUpdateDto.officeId));
-        }
-        tempUser.setFirstName(userUpdateDto.getFirstName());
-        if (userUpdateDto.getSecondName() != null) {
-            tempUser.setSecondName(userUpdateDto.getSecondName());
-        }
-        if (userUpdateDto.getMiddleName() != null) {
-            tempUser.setMiddleName(userUpdateDto.getMiddleName());
-        }
-        if (userUpdateDto.getPosition() != null) {
-            tempUser.setPosition(userUpdateDto.getPosition());
-        } else throw new NotFoundException("Position not found ");
+    public void update(User user) {
+        User usr = em.find(User.class, user.getId());
+        if (usr != null) {
+            Office office = em.getReference(Office.class, user.getOffice().getId());
+            usr.setOffice(office);
+            usr.setFirstName(user.getFirstName());
+            usr.setSecondName(user.getSecondName());
+            usr.setMiddleName(user.getMiddleName());
+            usr.setPosition(user.getPosition());
+            usr.setPhone(user.getPhone());
+            usr.getDocument().setDocNumber(user.getDocument().getDocNumber());
+            usr.getDocument().setDocDate(user.getDocument().getDocDate());
+            TypedQuery<TypeDocument> query = em.createQuery("SELECT d FROM TypeDocument d WHERE d.name = ?1", TypeDocument.class);
+            query.setParameter(1, user.getDocument().getTypeDocument().getName());
+            TypeDocument tDoc;
+            try {
+                tDoc = query.getSingleResult();
+                usr.getDocument().setTypeDocument(tDoc);
+            } catch (NoResultException e) {
+                throw new RuntimeException("Name docType not found", e);
+            }
+            TypedQuery<Citizenship> query2 = em.createQuery("SELECT n FROM Citizenship n WHERE n.code = ?1", Citizenship.class);
+            query2.setParameter(1, user.getCitizenship().getCode());
+            Citizenship citizenship = query2.getSingleResult();
+            if (citizenship != null) {
+                try {
+                    usr.setCitizenship(citizenship);
+                } catch (NoResultException e) {
+                    throw new RuntimeException("Citizenship code not found", e);
+                }
+            }
+            usr.setIsIdentified(user.getIsIdentified());
 
-        if (userUpdateDto.getPhone() != null) {
-            tempUser.setPhone(userUpdateDto.getPhone());
+        } else {
+            throw new EntityNotFoundException("User ID not found");
         }
-        if (userUpdateDto.getCitizenshipCode() != null) {
-            tempUser.setCitizenship(citizenshipDao.getCitizenshipByCode(userUpdateDto.getCitizenshipCode()));
-        }
-        em.persist(tempUser);
-
-        documentDao.updateDocument(userUpdateDto.id, userUpdateDto.docNumber, userUpdateDto.docDate, userUpdateDto.docName);
-
+        em.merge(usr);
     }
-
 }
+
+

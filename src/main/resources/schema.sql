@@ -15,7 +15,7 @@ COMMENT ON TABLE Organization IS 'Организация';
 CREATE TABLE IF NOT EXISTS Office(
     id        INTEGER                COMMENT 'Уникальный номер' PRIMARY KEY AUTO_INCREMENT,
     version   INTEGER     NOT NULL   COMMENT 'Служебное поле hibernate',
-    org_id    INTEGER     NOT NULL   COMMENT 'id организации',
+    org_id    INTEGER                COMMENT 'id организации',
     name      VARCHAR(50)            COMMENT 'Название офиса ',
     phone     VARCHAR(20)            COMMENT 'телефон офиса',
     address   VARCHAR(50)            COMMENT 'адрес офиса',
@@ -28,7 +28,7 @@ ALTER TABLE Office ADD FOREIGN KEY (org_id) REFERENCES Organization(id);
 CREATE TABLE IF NOT EXISTS User (
     id               INTEGER                COMMENT 'Уникальный номер' PRIMARY KEY AUTO_INCREMENT,
     version          INTEGER    NOT NULL    COMMENT 'Служебное поле hibernate',
-    office_id        INTEGER NOT NULL       COMMENT 'id офиса работника',
+    office_id        INTEGER                COMMENT 'id офиса работника',
     first_name       VARCHAR(50) NOT NULL   COMMENT 'Имя',
     second_name      VARCHAR(50)            COMMENT 'Фамилия',
     middle_name      VARCHAR(50)            COMMENT 'Отчество',
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Type_document(
     id      INTEGER NOT NULL        COMMENT 'id документа' PRIMARY KEY AUTO_INCREMENT,
     code    INTEGER                 COMMENT 'Код документа',
     version INTEGER    NOT NULL     COMMENT 'Служебное поле hibernate',
-    name    VARCHAR(60) NOT NULL    COMMENT 'Название документа'
+    name    VARCHAR(60)             COMMENT 'Название документа'
 );
 
 CREATE  INDEX IF NOT EXISTS IX_Document_type_id  ON Document(type_id );
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS  Citizenship(
     id      INTEGER NOT NULL        COMMENT 'id Гражданства' PRIMARY KEY AUTO_INCREMENT,
     code    INTEGER                 COMMENT 'код гражданства',
     version INTEGER    NOT NULL     COMMENT 'Служебное поле hibernate',
-    name    VARCHAR(60) NOT NULL    COMMENT 'Название страны'
+    name    VARCHAR(60)             COMMENT 'Название страны'
 );
 
 CREATE INDEX IF NOT EXISTS IX_User_citizenship_code  ON User(citizenship_code);
